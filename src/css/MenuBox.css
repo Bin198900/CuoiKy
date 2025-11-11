@@ -1,0 +1,22 @@
+.menu-box {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.menu-box h3 {
+  margin-bottom: 10px;
+}
+
+.menu-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-box li {
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.menu-box li:hover {
+  color: #ff6600;
+}

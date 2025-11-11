@@ -1,0 +1,24 @@
+.menu-top {
+  background-color: #111;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 40px;
+  align-items: center;
+}
+
+.menu-top ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.menu-top a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+.menu-top a:hover {
+  color: gold;
+}
