@@ -1,32 +1,36 @@
-import React from "react";
+// src/pages/Home.js
+import React, { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
+import ProductCard from "../components/ProductCard";
 
 export default function Home() {
-  const products = [
-    {
-      id: 1,
-      name: "Áo thun trắng",
-      price: "250.000đ",
-      img: "https://via.placeholder.com/200",
-    },
-    {
-      id: 2,
-      name: "Quần jean xanh",
-      price: "400.000đ",
-      img: "https://via.placeholder.com/200",
-    },
-    {
-      id: 3,
-      name: "Váy hoa",
-      price: "350.000đ",
-      img: "https://via.placeholder.com/200",
-    },
-    {
-      id: 4,
-      name: "Áo khoác da",
-      price: "600.000đ",
-      img: "https://via.placeholder.com/200",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .order("id", { ascending: true });
+
+        if (error) throw error;
+        setProducts(data);
+      } catch (err) {
+        setError("Không thể tải sản phẩm. Vui lòng thử lại!");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) return <div className="loading">Đang tải sản phẩm...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="home">
@@ -35,12 +39,7 @@ export default function Home() {
 
       <div className="product-grid">
         {products.map((p) => (
-          <div key={p.id} className="product-card">
-            <img src={p.img} alt={p.name} />
-            <h4>{p.name}</h4>
-            <p>{p.price}</p>
-            <button>Mua ngay</button>
-          </div>
+          <ProductCard key={p.id} product={p} />
         ))}
       </div>
     </div>
